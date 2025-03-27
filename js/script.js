@@ -54,3 +54,7 @@ console.log(teste);
 //Chamando o método multiplicar
 teste = calc.multiply(5,4);
 console.log(teste);
+
+for (let i=0; buttons.length > i; i++){
+    buttons [i].addEventListener('click,calc.btnPress');
+}
