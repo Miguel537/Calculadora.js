@@ -61,6 +61,17 @@ class Calculator{
                 stack.push(token); // empilha números e operadores '+' ou '-'
          }
        }
+
+       //Segundo passo: aplicar soma (+) e subtração (-)
+       let result = parseFloat(stack[0]); //Começa pelo primeiro número
+       for (let i = 1; i < stack.length; i += 2){
+        const operador = stack[i];
+        const num = parseFloat(stack[i + 1]);
+        if (operador === `+`) result = this.sum(result, num);
+        if (operador === `-`) result = this.subtraction(result, num);
+       }
+       alert(result);
+       return result;
     }
 
     btnPress = (event) => {
@@ -80,6 +91,21 @@ class Calculator{
             this.reset = true; //Ativa a flag para reiniciar em 0
             return;
         }
+
+        //se o botão clicado for um numero inteiro e a calculadora estiver em modo de reiniciar
+        if (this.reset && /^\d+$/.test(input)){
+            currentExpression = '0';
+            this.reset = false;
+        }
+
+        //substitui o zero inicial se for numero
+        if (currentExpression === '0' && /^\d+$/.test(input)){
+            currentExpression = input;
+        }else{
+            currentExpression += input;
+        }
+
+        this.upperValue.textContent = currentExpression;
     }
     
 }
@@ -87,7 +113,6 @@ class Calculator{
 
 //criando o objeto
 const calc = new Calculator();
-document.querySelector('#upper-number').textContent = '5 X 6 =';
 
 //start nos btns
 let buttons = document.querySelectorAll('.btn');
